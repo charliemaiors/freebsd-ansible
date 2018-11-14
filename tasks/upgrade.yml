@@ -1,0 +1,9 @@
+---
+- name: Upgrade freebsd release
+  shell: yes | freebsd-update --not-running-from-cron upgrade -r {{ release }}
+  register: update_status
+- name: Install updates
+  shell: freebsd-update --not-running-from-cron install
+  when: ("'Cannot upgrade from {{ release }} to itself' not in update_status.stdout") or ("'No mirrors remaining, giving up' in update_status.stdout")
+- name: Reboot machine and wait
+  

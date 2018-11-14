@@ -1,0 +1,7 @@
+---
+kernel_extra_params: "" # Kernel compilation extra variables for instance KERNCONF=VIMAGE for freebsd vnet kernel configuration
+kernel_recompile: false
+update: yes
+upgrade_release: yes
+release: "11.2-RELEASE"
+

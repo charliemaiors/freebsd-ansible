@@ -1,0 +1,5 @@
+---
+- name: 
+- name: Recompile kernel
+  shell: make -j {{ ansible_processor_vcpus }} {{ kernel_extra_params }} kernel
+  when: kernel_recompile

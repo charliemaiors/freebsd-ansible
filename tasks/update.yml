@@ -1,0 +1,21 @@
+---
+- name: Fetch any new FreeBSD updates
+  shell: freebsd-update --not-running-from-cron fetch
+  register: result_update
+  changed_when: "'No updates needed' not in result_update.stdout"
+- name: Install FreeBSD updates
+  shell: freebsd-update --not-running-from-cron install
+  when: result_update.changed
+  register: result_update_install
+- name: Upgrade FreeBSD packages
+  shell: pkg upgrade -y
+- name: Retrieve all jails
+  shell: jls -v name | grep -v "name"
+  register: jail_names
+- name: Jails are?
+  debug:
+      msg: "{{ jail_names }}"
+- name: Upgrade FreeBSD packages for jails
+  shell: pkg -j {{ item }} upgrade -y
+  with_items:
+    - "{{ jail_names.stdout_lines }}"
