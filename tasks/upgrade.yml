@@ -4,6 +4,11 @@
   register: update_status
 - name: Install updates
   shell: freebsd-update --not-running-from-cron install
-  when: ("'Cannot upgrade from {{ release }} to itself' not in update_status.stdout") or ("'No mirrors remaining, giving up' in update_status.stdout")
+  when: ('Cannot upgrade from {{ release }} to itself' not in update_status.stdout) or ('No mirrors remaining, giving up' in update_status.stdout)
 - name: Reboot machine and wait
-  
+  reboot:
+    reboot_timeout: "{{ upgrade_reboot_timeout }}"
+  when: ('Cannot upgrade from {{ release }} to itself' not in update_status.stdout) or ('No mirrors remaining, giving up' in update_status.stdout)
+- name: Finish updates 
+  shell: freebsd-update --not-running-from-cron install
+  when: ('Cannot upgrade from {{ release }} to itself' not in update_status.stdout) or ('No mirrors remaining, giving up' in update_status.stdout)

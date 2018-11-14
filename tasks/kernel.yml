@@ -1,5 +1,14 @@
 ---
-- name: 
+- name: Compile userland
+  shell: make -j {{ ansible_processor_vcpus }} buildworld
+  args:
+    chdir: /usr/src
+- name: Compile kernel 
+  shell: make -j {{ ansible_processor_vcpus }} buildkernel
+  args:
+    chdir: /usr/src
 - name: Recompile kernel
   shell: make -j {{ ansible_processor_vcpus }} {{ kernel_extra_params }} kernel
+  args:
+    chdir: /usr/src
   when: kernel_recompile
