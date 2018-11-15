@@ -10,12 +10,15 @@
 - name: Upgrade FreeBSD packages
   shell: pkg upgrade -y
 - name: Retrieve all jails
-  shell: jls -v name | grep -v "name"
+  shell: jls -v name path
   register: jail_names
-- name: Jails are?
-  debug:
-      msg: "{{ jail_names }}"
 - name: Upgrade FreeBSD packages for jails
-  shell: pkg -j {{ item }} upgrade -y
+  shell: pkg -j {{ item.split(" ")[0] }} upgrade -y
   with_items:
     - "{{ jail_names.stdout_lines }}"
+  when: update == "full"
+- name: Upgrade userland for each jail
+  shell: freebsd-update -b {{ item.split(" ")[1] }} --not-running-from-cron fetch install
+  with_items:
+    - "{{ jail_names.stdout_lines }}"
+  when: update == "full"

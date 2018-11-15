@@ -1,2 +1,5 @@
 ---
-
+- name: include tasks for release upgrade
+  include_tasks: upgrade.yml
+  when: release is defined
+- name: include compilation tasks

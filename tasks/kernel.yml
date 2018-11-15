@@ -3,12 +3,14 @@
   shell: make -j {{ ansible_processor_vcpus }} buildworld
   args:
     chdir: /usr/src
-- name: Compile kernel 
-  shell: make -j {{ ansible_processor_vcpus }} buildkernel
+  when: base_compile
+- name: Compile kernel
+  shell: make -j {{ ansible_processor_vcpus }} {{ kernel_extra_params }} kernel # make kernel = make buildkernel + make installkernel
   args:
     chdir: /usr/src
-- name: Recompile kernel
-  shell: make -j {{ ansible_processor_vcpus }} {{ kernel_extra_params }} kernel
-  args:
-    chdir: /usr/src
-  when: kernel_recompile
+  when: kernel_opts or base_compile
+- name: Reboot and wait for reboot
+  reboot:
+    reboot_timeout: 3600
+    msg: Reboot initiated Kernel upgrade
+  when: kernel_opts or base_compile
