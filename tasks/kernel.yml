@@ -3,7 +3,7 @@
   shell: make -j {{ ansible_processor_vcpus }} buildworld
   args:
     chdir: /usr/src
-  when: base_compile
+  when: base_compile or src_updated
 - name: Compile kernel
   shell: make -j {{ ansible_processor_vcpus }} {{ kernel_extra_params }} kernel # make kernel = make buildkernel + make installkernel
   args:
@@ -14,3 +14,9 @@
     reboot_timeout: 3600
     msg: Reboot initiated Kernel upgrade
   when: kernel_opts or base_compile
+- name: Install userland
+  shell: make -j {{ ansible_processor_vcpus }} installworld
+  args:
+    chdir: /usr/src
+  when: base_compile or src_updated
+  
