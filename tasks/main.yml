@@ -1,5 +1,26 @@
 ---
+- name: check if /usr/src is full
+  find:
+    paths: /usr/src
+    patterns: '*.*'
+  register: foundFiles
+- name: src are installed
+  set_fact:
+    src_installed: true
+  when: foundFiles.matched > 0
+- name: src are not installed
+  set_fact:
+    src_installed: false
+  when: foundFiles.matched < 0
+- name: include extra component
+  include_tasks: install_components.yml
+  when: components is defined
+- name: include tasks for update
+  include_tasks: update.yml
+  when: update is defined
 - name: include tasks for release upgrade
   include_tasks: upgrade.yml
   when: release is defined
 - name: include compilation tasks
+  include_tasks: compile.yml
+  when: (src_installed or src in components) and base_compile

@@ -4,6 +4,7 @@
   args:
     chdir: /usr/src
   when: base_compile or src_updated
+  register: userland_builded
 - name: Compile kernel
   shell: make -j {{ ansible_processor_vcpus }} {{ kernel_extra_params }} kernel # make kernel = make buildkernel + make installkernel
   args:

@@ -3,6 +3,14 @@
   shell: freebsd-update --not-running-from-cron fetch
   register: result_update
   changed_when: "'No updates needed' not in result_update.stdout"
+- name: set src updated
+  set_fact:
+    src_updated: true
+  when: "'/usr/src' in result_update.stdout"
+- name: set kernel updated
+  set_fact:
+    kernel_opts: true
+  when: "'/boot/kernel' in result_update.stdout"
 - name: Install FreeBSD updates
   shell: freebsd-update --not-running-from-cron install
   when: result_update.changed
