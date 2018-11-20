@@ -23,4 +23,4 @@
   when: release is defined
 - name: include compilation tasks
   include_tasks: compile.yml
-  when: (src_installed or src in components) and base_compile
+  when: (src_installed or "src" in components) and base_compile
