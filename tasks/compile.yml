@@ -1,14 +1,18 @@
 ---
 - name: Compile userland
-  shell: make -j {{ ansible_processor_vcpus }} buildworld
-  args:
+  make: 
     chdir: /usr/src
+    target: buildworld
+    params:
+      -j: "{{ ansible_processor_vcpus }}"
   when: base_compile or src_updated
   register: userland_builded
 - name: Compile kernel
-  shell: make -j {{ ansible_processor_vcpus }} {{ kernel_extra_params }} kernel # make kernel = make buildkernel + make installkernel
-  args:
+  make:
     chdir: /usr/src
+    target: kernel
+    params:
+      -j: "{{ ansible_processor_vcpus }}"
   when: kernel_opts or base_compile
 - name: Reboot and wait for reboot
   reboot:
@@ -16,8 +20,10 @@
     msg: Reboot initiated Kernel upgrade
   when: kernel_opts or base_compile
 - name: Install userland
-  shell: make -j {{ ansible_processor_vcpus }} installworld
-  args:
+  make:
     chdir: /usr/src
+    target: installworld
+    params:
+      -j: "{{ ansible_processor_vcpus }}"
   when: base_compile or src_updated
   
