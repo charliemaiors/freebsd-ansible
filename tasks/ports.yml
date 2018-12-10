@@ -9,4 +9,5 @@
   when: foundFiles.matched > 0
 - name: update ports tree
   command: portsnap update
+  when: foundFiles.matched > 0
 

@@ -4,7 +4,9 @@
     chdir: /usr/src
     target: buildworld
     params:
-      -j: "{{ ansible_processor_vcpus }}"
+      - "{{ item.key }}": "{{ item.value }}"
+  with_dict:
+    - build_common
   when: base_compile or src_updated
   register: userland_builded
 - name: Compile kernel
@@ -12,7 +14,10 @@
     chdir: /usr/src
     target: kernel
     params:
-      -j: "{{ ansible_processor_vcpus }}"
+      - "{{ item.key }}": "{{ item.value }}"
+    with_dict:
+      - "{{ build_common | combine (kernel_extra_params) }}"
+      
   when: kernel_opts or base_compile
 - name: Reboot and wait for reboot
   reboot:
@@ -24,6 +29,8 @@
     chdir: /usr/src
     target: installworld
     params:
-      -j: "{{ ansible_processor_vcpus }}"
+      - "{{ item.key }}": "{{ item.value }}"
+  with_dict:
+    - build_common
   when: base_compile or src_updated
   

@@ -24,3 +24,6 @@
 - name: include compilation tasks
   include_tasks: compile.yml
   when: (src_installed or "src" in components) and base_compile
+- name: include ports handling tasks
+  include_tasks: ports.yml
+  when: handle_ports

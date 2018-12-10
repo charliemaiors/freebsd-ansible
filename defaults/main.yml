@@ -1,5 +1,6 @@
 ---
 upgrade_reboot_timeout: 3600
 base_url: ftp://ftp.freebsd.org/pub/FreeBSD/releases
-kernel_extra_params: "" # Kernel compilation extra variables for instance KERNCONF=VIMAGE for freebsd vnet kernel configuration
 src_updated: false
+build_common:
+  "-j": "{{ ansible_processor_vcpus }}"
