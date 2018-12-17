@@ -11,7 +11,7 @@
 - name: src are not installed
   set_fact:
     src_installed: false
-  when: foundFiles.matched < 0
+  when: foundFiles.matched <= 0
 - name: include extra component
   include_tasks: install_components.yml
   when: components is defined
