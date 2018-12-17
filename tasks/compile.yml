@@ -1,6 +1,6 @@
 ---
 - name: Compile userland
-  make: 
+  make:
     chdir: /usr/src
     target: buildworld
     params:
@@ -17,7 +17,6 @@
       - "{{ item.key }}": "{{ item.value }}"
     with_dict:
       - "{{ build_common | combine (kernel_extra_params) }}"
-      
   when: kernel_opts or base_compile
 - name: Reboot and wait for reboot
   reboot:
@@ -33,4 +32,3 @@
   with_dict:
     - build_common
   when: base_compile or src_updated
-  

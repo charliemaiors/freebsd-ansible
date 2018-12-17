@@ -1,5 +1,10 @@
 extends: default
 
+ignore: |
+  .travis.yml
+  meta/
+
+
 rules:
   braces:
     max-spaces-inside: 1

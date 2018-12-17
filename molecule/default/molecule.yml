@@ -2,12 +2,13 @@
 dependency:
   name: galaxy
 driver:
-  name: docker
+  name: openstack
 lint:
   name: yamllint
 platforms:
-  - name: instance
-    image: centos:7
+  - name: freebsd
+    image: Freebsd-12.0-RELEASE
+    flavor: m1.medium
 provisioner:
   name: ansible
   lint:

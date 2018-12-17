@@ -1,5 +1,9 @@
 ---
 - name: Converge
   hosts: all
+  vars:
+    - components:
+        - src
+        - ports
   roles:
-    - role: freebsd
+    - { role: freebsd, base_compile: true , release: "12.0-RELEASE"}
