@@ -7,8 +7,8 @@
   when: components is defined
 - name: Install target components
   unarchive:
-      src: "{{ ansible_env.HOME }}/{{ item }}.txz"
-      dest: 
-      remote_src: yes
+    src: "{{ ansible_env.HOME }}/{{ item }}.txz"
+    dest: /
+    remote_src: true
   with_items: "{{ components }}"
   when: components is defined
