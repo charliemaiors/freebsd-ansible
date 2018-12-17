@@ -27,8 +27,8 @@
     keypair_name: "keypair-{{ molecule_yml['platforms'][0]['name'] }}"
     keypair_path: "{{ lookup('env', 'MOLECULE_EPHEMERAL_DIRECTORY') }}/ssh_key"
 
-    nova_image: Ubuntu-16.04
-    nova_flavor: NO-Nano
+    nova_image: FreeBSD-12.0-RELEASE
+    nova_flavor: m1.medium
   tasks:
     - name: Create security group
       os_security_group:
