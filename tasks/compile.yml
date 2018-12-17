@@ -5,9 +5,8 @@
     target: buildworld
     params:
       - "{{ item.key }}": "{{ item.value }}"
-  with_dict:
-    - build_common
-  when: base_compile or src_updated
+  with_dict: "{{ build_common }}"
+  when: base_compile and src_updated
   register: userland_builded
 - name: Compile kernel
   make:
@@ -17,7 +16,7 @@
       - "{{ item.key }}": "{{ item.value }}"
     with_dict:
       - "{{ build_common | combine (kernel_extra_params) }}"
-  when: kernel_opts or base_compile
+  when: kernel_opts and base_compile
 - name: Reboot and wait for reboot
   reboot:
     reboot_timeout: 3600
@@ -29,6 +28,5 @@
     target: installworld
     params:
       - "{{ item.key }}": "{{ item.value }}"
-  with_dict:
-    - build_common
-  when: base_compile or src_updated
+  with_dict: "{{ build_common }}"
+  when: base_compile and src_updated
