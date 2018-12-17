@@ -11,6 +11,7 @@ platforms:
     flavor: m1.medium
 provisioner:
   name: ansible
+  log: true
   lint:
     name: ansible-lint
 scenario:
