@@ -6,9 +6,8 @@
   with_items: "{{ components }}"
   when: components is defined
 - name: Install target components
-  unarchive:
-    src: "{{ ansible_env.HOME }}/{{ item }}.txz"
-    dest: /
-    remote_src: true
+  command: tar -C / -xvf {{ item }}.txz
+  args:
+    chdir: "{{ ansible_env.HOME }}"
   with_items: "{{ components }}"
   when: components is defined
