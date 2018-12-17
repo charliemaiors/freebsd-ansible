@@ -7,7 +7,7 @@ lint:
   name: yamllint
 platforms:
   - name: freebsd
-    image: Freebsd-12.0-RELEASE
+    image: FreeBSD-12.0-RELEASE
     flavor: m1.medium
 provisioner:
   name: ansible
