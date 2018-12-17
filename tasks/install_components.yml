@@ -3,13 +3,11 @@
   get_url:
     dest: '{{ ansible_env.HOME }}/{{ item }}.txz'
     url: '{{ base_url }}/{{ ansible_machine }}/{{ ansible_distribution_release.split("-")[0] }}-{{ ansible_distribution_release.split("-")[1] }}/{{ item }}.txz'
-  with_items:
-    - components
+  with_items: "{{ components }}"
   when: components is defined
 - name: Install target components
   shell: tar -C / -xvf {{ item }}.txz
   args:
     chdir: "{{ ansible_env.HOME }}"
-  with_items:
-    - components
+  with_items: "{{ components }}"
   when: components is defined
