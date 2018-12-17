@@ -4,6 +4,6 @@
   gather_facts: false
   tasks:
     - name: Install python for Ansible
-      raw: test -e /usr/bin/python || (pkg upgrade -y && pkg install -y python && ln -sf /usr/local/bin/python2.7 //usr/local/bin/python)
+      raw: test -e /usr/bin/python || (pkg upgrade -y && pkg install -y python && ln -sf /usr/local/bin/python2.7 //usr/bin/python)
       become: true
       changed_when: false
