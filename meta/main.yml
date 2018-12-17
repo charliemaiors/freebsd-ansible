@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Carlo Maiorano
-  description: role for update FreeBSD and all jails
+  description: role for manage FreeBSD
   company: Private
 
   # If the issue tracker for your role is not on github, uncomment the
@@ -45,8 +45,8 @@ galaxy_info:
   #   - 7
   #   - 99.99
 
-  galaxy_tags: 
-    - freebsd 
+  galaxy_tags:
+    - freebsd
     - update
     - install
   # List tags for your role here, one per line. A tag is a keyword that describes
