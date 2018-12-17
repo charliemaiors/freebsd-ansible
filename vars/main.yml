@@ -6,5 +6,5 @@ handle_ports: false
 components:
   - src
   - ports
-kernel_extra_params:   # Kernel compilation extra variables for instance KERNCONF:VIMAGE for freebsd vnet kernel configuration
-  "": ""
+# kernel_extra_params:  Kernel compilation extra variables for instance KERNCONF:VIMAGE for freebsd vnet kernel configuration
+  
