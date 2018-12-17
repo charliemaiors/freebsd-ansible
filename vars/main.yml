@@ -1,10 +1,10 @@
 ---
 base_compile: false
-update: "simple" # Update variable could be simple for base system update (using freebsd-update) and pkg update, full for also userland and pkgs for jails
+update: "simple"   # Update variable could be simple for base system update (using freebsd-update) and pkg update, full for also userland and pkgs for jails
 release: "11.2-RELEASE"
 handle_ports: false
 components:
   - src
   - ports
-kernel_extra_params: # Kernel compilation extra variables for instance KERNCONF:VIMAGE for freebsd vnet kernel configuration
+kernel_extra_params:   # Kernel compilation extra variables for instance KERNCONF:VIMAGE for freebsd vnet kernel configuration
   "DUMMY": "DUMMY"
