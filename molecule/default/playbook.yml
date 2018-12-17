@@ -6,4 +6,4 @@
         - src
         - ports
   roles:
-    - { role: freebsd, base_compile: true, release: "12.0-RELEASE"}
+    - { role: freebsd-ansible, base_compile: true, release: "12.0-RELEASE"}
