@@ -16,6 +16,16 @@ provisioner:
     name: ansible-lint
 scenario:
   name: default
+  test_sequence:
+    - lint
+    - dependency
+    - syntax
+    - create
+    - prepare
+    - converge
+    - side_effect
+    - verify
+    - destroy
 verifier:
   name: testinfra
   lint:
