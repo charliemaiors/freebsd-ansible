@@ -1,48 +1,44 @@
 Role Name
 =========
 
-A brief description of the role goes here.
+This role will manage a FreeBSD installation and from package upgrade to src compile.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should
-be mentioned here. For instance, if the role uses the EC2 module, it may be a
-good idea to mention in this section that the boto package is required.
+No requirement
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including
-any variables that are in defaults/main.yml, vars/main.yml, and any variables
-that can/should be set via parameters to the role. Any variables that are read
-from other roles and/or the global scope (ie. hostvars, group vars, etc.) should
-be mentioned here as well.
+This roles relies on these variables:
+
+* base_compile: boolean variable used as flag for source code compile (using [build](https://www.freebsd.org/cgi/man.cgi?build(7)) method).
+* update: used as enumerative it could be simple or full, when is settled to "simple" only the target host will be updated, when is settled to "full" also the jails (if there any) will be updated.
+* release: in case of a major (or minor) release set this variable (like when you type ```freebsd-update upgrade -r <release>```)
+* handle_ports: used in case of port fetch or extract (using ```portsnap```)
+* components: is a list of components of the main system like ports, src, base-dbg (see [bsdinstall](https://www.freebsd.org/doc/handbook/using-bsdinstall.html)) 
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in
-regards to parameters that may need to be set for other roles, or variables that
-are used from other roles.
+No dependencies
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables
-passed in as parameters) is always nice for users too:
+This is an example playbook:
 
-    - hosts: servers
+    - name: FreeBSD
+      hosts: all
+      become: true
+      vars:
+        - components:
+        - src
       roles:
-         - { role: freebsd, x: 42 }
+        - { role: freebsd-ansible, base_compile: true, release: "12.0-RELEASE"}
 
 License
 -------
 
 BSD
-
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a
-website (HTML is not allowed).

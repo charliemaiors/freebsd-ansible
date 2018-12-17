@@ -20,6 +20,7 @@
 - name: Retrieve all jails
   shell: jls -v name path
   register: jail_names
+  when: update == "full"
 - name: Upgrade FreeBSD packages for jails
   shell: pkg -j {{ item.split(" ")[0] }} upgrade -y
   with_items:
