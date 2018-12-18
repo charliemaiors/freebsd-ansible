@@ -7,3 +7,4 @@ components:
   - src
   - ports
 # kernel_extra_params:  Kernel compilation extra variables for instance KERNCONF:VIMAGE for freebsd vnet kernel configuration
+# - {key: KERNCONF, value: VIMAGE}
