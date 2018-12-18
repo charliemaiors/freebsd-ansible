@@ -3,10 +3,6 @@
   make:
     chdir: /usr/src
     target: buildworld
-#    params:
-#      "{{ item.key }}": "{{ item.value }}"
-#  with_dict:
-#    - "{{ build_common }}"
   when: (base_compile and src_updated) or (base_compile and src_installed)
   register: userland_builded
 - name: combine dict for kernel compilation
@@ -50,3 +46,7 @@
       "{{ item.key }}": "{{ item.value }}"
   with_dict: "{{ build_common }}"
   when: (base_compile and src_updated) or (base_compile and src_installed)
+#    params:
+#      "{{ item.key }}": "{{ item.value }}"
+#  with_dict:
+#    - "{{ build_common }}"
