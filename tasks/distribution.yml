@@ -53,7 +53,7 @@
     target: openstack-upload
     params:
       "{{ item.key }}": "{{ item.value }}"
-  with_dict:
+  with_items:
     - "{{ openstack_upload_vars }}"
   when: '"openstack" in cloud_vm_types'
 - name: Upload image to Amazon Ec2
@@ -62,7 +62,7 @@
     target: ec2ami
     params:
       "{{ item.key }}": "{{ item.value }}"
-  with_dict:
+  with_items:
     - "{{ aws_upload_vars }}"
   when: '"aws" in cloud_vm_types'
 - name: Upload to GCE

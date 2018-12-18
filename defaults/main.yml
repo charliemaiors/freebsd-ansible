@@ -3,4 +3,4 @@ upgrade_reboot_timeout: 3600
 base_url: ftp://ftp.freebsd.org/pub/FreeBSD/releases
 src_updated: false
 build_common:
-  "MAKE_JOBS_NUMBER": "{{ ansible_processor_count }}"
+  - { key: "MAKE_JOBS_NUMBER", value: "{{ ansible_processor_count }}" }
