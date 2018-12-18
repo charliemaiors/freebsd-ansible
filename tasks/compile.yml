@@ -4,7 +4,7 @@
     chdir: /usr/src
     target: buildworld
     params:
-      - "{{ item.key }}": "{{ item.value }}"
+      - "{{ item.param }}": "{{ item.val }}"
   with_items: "{{ build_common }}"
   when: (base_compile and src_updated) or (base_compile and src_installed)
   register: userland_builded
@@ -21,12 +21,22 @@
 - name: Compile kernel
   make:
     chdir: /usr/src
-    target: kernel
+    target: buildkernel
+    params:
+      - "{{ item.key }}": "{{ item.value }}"
+  with_items:
+    - "{{ kernel_options }}"
+  when: base_compile or kernel_opts or create_vm
+- name: Install kernel
+  make:
+    chdir: /usr/src
+    target: installkernel
     params:
       - "{{ item.key }}": "{{ item.value }}"
     with_items:
       - "{{ kernel_options }}"
   when: base_compile or kernel_opts
+
 - name: Reboot and wait for reboot
   reboot:
     reboot_timeout: 3600
