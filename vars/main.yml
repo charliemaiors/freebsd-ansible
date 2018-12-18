@@ -18,7 +18,7 @@ cloud_vm_types:
 components:
   - src
   - ports
-# openstack_upload_vars: openstack upload envinroment variables 
+# openstack_upload_vars: openstack upload envinroment variables
 #  "OS_USERNAME":"pippo"
 #  "OS_PASSWORD":"pippo"
 # aws_upload_vars: aws upload enviroment variables
