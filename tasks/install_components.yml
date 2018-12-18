@@ -11,3 +11,7 @@
     chdir: "{{ ansible_env.HOME }}"
   with_items: "{{ components }}"
   when: components is defined
+- name: set src installed facts
+  set_fact:
+    src_installed: true
+  when: src in components
