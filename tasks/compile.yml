@@ -35,7 +35,7 @@
     params:
       "{{ item.key }}": "{{ item.value }}"
   with_items:
-      - "{{ kernel_options }}"
+    - "{{ kernel_options }}"
   when: base_compile or kernel_opts
 - name: Reboot and wait for reboot
   reboot:
