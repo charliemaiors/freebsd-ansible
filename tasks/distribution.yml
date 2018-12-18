@@ -3,6 +3,7 @@
   make:
     chdir: /usr/src
     target: buildkernel
+    file: Makefile
     params:
       "{{ item.key }}": "{{ item.value }}"
   with_dict:
@@ -12,6 +13,7 @@
   make:
     chdir: /usr/src/release
     target: "{{ item }}"
+    file: Makefile
   with_items:
     - "{{ distribution_types }}"
   when: distribution_types is defined
@@ -19,6 +21,7 @@
   make:
     chdir: /usr/src/release
     target: release-install
+    file: Makefile
     params:
       "DESTDIR": "{{ distribution_install_dir }}"
   when: distribution_types is defined
@@ -26,6 +29,7 @@
   make:
     chdir: /usr/src/release
     target: vm-image
+    file: Makefile
     params:
       "WITH_VMIMAGES": "{{ item }}"
   with_items:
@@ -35,12 +39,14 @@
   make:
     chdir: /usr/src/release
     target: vm-release
+    file: Makefile
     params:
       "DESTDIR": "{{ vm_install_dir }}"
 - name: Make cloudware release
   make:
     chdir: /usr/src/release
     target: cloudware-release
+    file: Makefile
     params:
       "WITH_CLOUDWARE": "yes"
       "CLOUDWARE": "{{ item|upper }}"
@@ -50,6 +56,7 @@
   make:
     chdir: /usr/src/release
     target: openstack-upload
+    file: Makefile
     params:
       "{{ item.key }}": "{{ item.value }}"
   with_dict:
@@ -59,6 +66,7 @@
   make:
     chdir: /usr/src/release
     target: ec2ami
+    file: Makefile
     params:
       "{{ item.key }}": "{{ item.value }}"
   with_dict:
@@ -73,4 +81,5 @@
   make:
     chdir: /usr/src/release
     target: azure-upload
+    file: Makefile
   when: '"azure" in cloud_vm_types'
