@@ -3,11 +3,10 @@
   make:
     chdir: /usr/src
     target: buildworld
-    file: /usr/src/Makefile
-    params:
-      "{{ item.key }}": "{{ item.value }}"
-  with_dict:
-    - "{{ build_common }}"
+#    params:
+#      "{{ item.key }}": "{{ item.value }}"
+#  with_dict:
+#    - "{{ build_common }}"
   when: (base_compile and src_updated) or (base_compile and src_installed)
   register: userland_builded
 - name: combine dict for kernel compilation
@@ -24,7 +23,6 @@
   make:
     chdir: /usr/src
     target: buildkernel
-    file: /usr/src/Makefile
     params:
       "{{ item.key }}": "{{ item.value }}"
   with_dict:
@@ -34,7 +32,6 @@
   make:
     chdir: /usr/src
     target: installkernel
-    file: /usr/src/Makefile
     params:
       "{{ item.key }}": "{{ item.value }}"
     with_dict:
@@ -49,7 +46,6 @@
   make:
     chdir: /usr/src
     target: installworld
-    file: /usr/src/Makefile
     params:
       "{{ item.key }}": "{{ item.value }}"
   with_dict: "{{ build_common }}"
