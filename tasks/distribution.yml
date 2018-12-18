@@ -1,0 +1,76 @@
+---
+- name: Build generic kernel if extra kernel params are defined
+  make:
+    chdir: /usr/src
+    target: buildkernel
+    params:
+      "{{ item.key }}": "{{ item.value }}"
+  with_dict:
+    - "{{ build_common }}"
+  when: kernel_extra_params is defined
+- name: Make distribution release
+  make:
+    chdir: /usr/src/release
+    target: "{{ item }}"
+  with_items:
+    - "{{ distribution_types }}"
+  when: distribution_types is defined
+- name: Copy all media build on release folder
+  make:
+    chdir: /usr/src/release
+    target: release-install
+    params:
+      "DESTDIR": "{{ distribution_install_dir }}"
+  when: distribution_types is defined
+- name: Make vm types
+  make:
+    chdir: /usr/src/release
+    target: vm-image
+    params:
+      "WITH_VMIMAGES": "{{ item }}"
+  with_items:
+    - "{{ vm_format_types }}"
+  when: vm_format_types is defined
+- name: Make vm release
+  make:
+    chdir: /usr/src/release
+    target: vm-release
+    params:
+      "DESTDIR": "{{ vm_install_dir }}"
+- name: Make cloudware release
+  make:
+    chdir: /usr/src/release
+    target: cloudware-release
+    params:
+      "WITH_CLOUDWARE": "yes"
+      "CLOUDWARE": "{{ item|upper }}"
+  with_items:
+    - "{{ cloud_vm_types }}"
+- name: Upload image to Openstack
+  make:
+    chdir: /usr/src/release
+    target: openstack-upload
+    params:
+      "{{ item.key }}": "{{ item.value }}"
+  with_dict:
+    - "{{ openstack_upload_vars }}"
+  when: '"openstack" in cloud_vm_types'
+- name: Upload image to Amazon Ec2
+  make:
+    chdir: /usr/src/release
+    target: ec2ami
+    params:
+      "{{ item.key }}": "{{ item.value }}"
+  with_dict:
+    - "{{ aws_upload_vars }}"
+  when: '"aws" in cloud_vm_types'
+- name: Upload to GCE
+  make:
+    chdir: /usr/src/release
+    target: gce-upload
+  when: '"gce" in cloud_vm_types'
+- name: Upload to azure
+  make:
+    chdir: /usr/src/release
+    target: azure-upload
+  when: '"azure" in cloud_vm_types'

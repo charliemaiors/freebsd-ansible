@@ -4,14 +4,14 @@
     chdir: /usr/src
     target: buildworld
     params:
-      "{{ item.param }}": "{{ item.val }}"
-  with_items:
+      "{{ item.key }}": "{{ item.value }}"
+  with_dict:
     - "{{ build_common }}"
   when: (base_compile and src_updated) or (base_compile and src_installed)
   register: userland_builded
 - name: combine dict for kernel compilation
   set_fact:
-    kernel_options: "{{ build_common + kernel_extra_params }}"
+    kernel_options: "{{ build_common | combine(kernel_extra_params) }}"
   when:
     - kernel_extra_params is defined
 - name: set normal kernel compilation options
@@ -25,7 +25,7 @@
     target: buildkernel
     params:
       "{{ item.key }}": "{{ item.value }}"
-  with_items:
+  with_dict:
     - "{{ kernel_options }}"
   when: base_compile or kernel_opts or create_vm
 - name: Install kernel
@@ -34,13 +34,12 @@
     target: installkernel
     params:
       "{{ item.key }}": "{{ item.value }}"
-    with_items:
+    with_dict:
       - "{{ kernel_options }}"
   when: base_compile or kernel_opts
-
 - name: Reboot and wait for reboot
   reboot:
-    reboot_timeout: 3600
+    reboot_timeout: "{{ upgrade_reboot_timeout }}"
     msg: Reboot initiated Kernel upgrade
   when: base_compile or kernel_opts
 - name: Install userland
@@ -49,5 +48,5 @@
     target: installworld
     params:
       "{{ item.key }}": "{{ item.value }}"
-  with_items: "{{ build_common }}"
+  with_dict: "{{ build_common }}"
   when: (base_compile and src_updated) or (base_compile and src_installed)

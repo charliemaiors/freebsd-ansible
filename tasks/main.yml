@@ -27,3 +27,6 @@
 - name: include ports handling tasks
   include_tasks: ports.yml
   when: handle_ports
+- name: include distribution tasks
+  include_tasks: distribution.yml
+  when: create_distribution

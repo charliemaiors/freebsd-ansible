@@ -3,12 +3,27 @@ base_compile: false
 update: "simple"   # Update variable could be simple for base system update (using freebsd-update) and pkg update, full for also userland and pkgs for jails
 release: "11.2-RELEASE"
 handle_ports: false
-create_vm: false
-vm_types:
-  - Openstack
-  - Vagrant
+create_distribution: false
+distribution_types:
+  - memstick
+  - cdrom
+  - dvdrom
+distribution_install_dir: "{{ ansible_env.HOME }}"
+vm_format_types:
+  - vmdk
+  - vhd
+vm_install_dir: "{{ ansible_env.HOME }}"
+cloud_vm_types:
+  - openstack
 components:
   - src
   - ports
+# openstack_upload_vars: openstack upload envinroment variables 
+#  "OS_USERNAME":"pippo"
+#  "OS_PASSWORD":"pippo"
+# aws_upload_vars: aws upload enviroment variables
+#   "AWSKEYFILE": "path_to_keyfile"
+#   "AWSREGION": "region"
+#   "AWSBUCKET": "bucket"
 # kernel_extra_params:  Kernel compilation extra variables for instance KERNCONF:VIMAGE for freebsd vnet kernel configuration
-# - {key: KERNCONF, value: VIMAGE}
+#  "KERNCONF": "VIMAGE"
