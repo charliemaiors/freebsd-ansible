@@ -3,7 +3,7 @@
   make:
     chdir: /usr/src
     target: buildkernel
-    file: Makefile
+    file: /usr/src/Makefile
     params:
       "{{ item.key }}": "{{ item.value }}"
   with_dict:
@@ -13,7 +13,7 @@
   make:
     chdir: /usr/src/release
     target: "{{ item }}"
-    file: Makefile
+    file: /usr/src/release/Makefile
   with_items:
     - "{{ distribution_types }}"
   when: distribution_types is defined
@@ -21,7 +21,7 @@
   make:
     chdir: /usr/src/release
     target: release-install
-    file: Makefile
+    file: /usr/src/release/Makefile
     params:
       "DESTDIR": "{{ distribution_install_dir }}"
   when: distribution_types is defined
@@ -29,7 +29,7 @@
   make:
     chdir: /usr/src/release
     target: vm-image
-    file: Makefile
+    file: /usr/src/release/Makefile
     params:
       "WITH_VMIMAGES": "{{ item }}"
   with_items:
@@ -39,7 +39,7 @@
   make:
     chdir: /usr/src/release
     target: vm-release
-    file: Makefile
+    file: /usr/src/release/Makefile
     params:
       "DESTDIR": "{{ vm_install_dir }}"
 - name: Make cloudware release
@@ -56,7 +56,7 @@
   make:
     chdir: /usr/src/release
     target: openstack-upload
-    file: Makefile
+    file: /usr/src/release/Makefile
     params:
       "{{ item.key }}": "{{ item.value }}"
   with_dict:
@@ -66,7 +66,7 @@
   make:
     chdir: /usr/src/release
     target: ec2ami
-    file: Makefile
+    file: /usr/src/release/Makefile
     params:
       "{{ item.key }}": "{{ item.value }}"
   with_dict:
@@ -76,10 +76,11 @@
   make:
     chdir: /usr/src/release
     target: gce-upload
+    file: /usr/src/release/Makefile
   when: '"gce" in cloud_vm_types'
 - name: Upload to azure
   make:
     chdir: /usr/src/release
     target: azure-upload
-    file: Makefile
+    file: /usr/src/release/Makefile
   when: '"azure" in cloud_vm_types'
