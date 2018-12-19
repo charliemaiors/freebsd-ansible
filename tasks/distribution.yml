@@ -4,7 +4,7 @@
     chdir: /usr/src
     target: buildkernel
     params:
-      {"{{ item.key }}": "{{ item.value }}"}
+      "{{ item.key }}: {{ item.value }}"
   with_items:
     - "{{ build_common }}"
   when: kernel_extra_params is defined
@@ -52,7 +52,7 @@
     chdir: /usr/src/release
     target: openstack-upload
     params:
-      {"{{ item.key }}": "{{ item.value }}"}
+      "{{ item.key }}: {{ item.value }}"
   with_items:
     - "{{ openstack_upload_vars }}"
   when: '"openstack" in cloud_vm_types'
@@ -61,7 +61,7 @@
     chdir: /usr/src/release
     target: ec2ami
     params:
-      {"{{ item.key }}": "{{ item.value }}"}
+      "{{ item.key }}: {{ item.value }}"
   with_items:
     - "{{ aws_upload_vars }}"
   when: '"aws" in cloud_vm_types'
