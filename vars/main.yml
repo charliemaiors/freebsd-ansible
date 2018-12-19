@@ -1,7 +1,7 @@
 ---
 base_compile: false
 update: "simple"   # Update variable could be simple for base system update (using freebsd-update) and pkg update, full for also userland and pkgs for jails
-release: "11.2-RELEASE"
+release: ""
 handle_ports: false
 create_distribution: false
 distribution_types:
