@@ -1,5 +1,7 @@
-Role Name
+FreeBSD-Ansible
 =========
+
+[![Build Status](https://travis-ci.org/charliemaiors/freebsd-ansible.svg?branch=master)](https://travis-ci.org/charliemaiors/freebsd-ansible)
 
 This role will manage a FreeBSD installation and from package upgrade to src compile.
 
