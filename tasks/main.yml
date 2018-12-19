@@ -1,4 +1,7 @@
 ---
+- name: Install python for Ansible
+  raw: command -v python 2>&1 || (pkg upgrade -y && pkg install -y python && ln -sf /usr/local/bin/python2.7 /usr/local/bin/python)
+  changed_when: false
 - name: check if /usr/src is full
   find:
     paths: /usr/src
