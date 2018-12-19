@@ -1,7 +1,6 @@
 ---
 base_compile: false
 update: "simple"   # Update variable could be simple for base system update (using freebsd-update) and pkg update, full for also userland and pkgs for jails
-release: ""
 handle_ports: false
 create_distribution: false
 distribution_types:
@@ -18,6 +17,7 @@ cloud_vm_types:
 components:
   - src
   - ports
+# release: ""
 # openstack_upload_vars: openstack upload envinroment variables
 #  - { key: "OS_USERNAME", value: "pippo" }
 #  - { key: "OS_PASSWORD", value: "pippo" }
