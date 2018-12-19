@@ -6,4 +6,4 @@
     - components:
         - src
   roles:
-    - { role: freebsd-ansible, base_compile: true, release: "12.0-RELEASE"}
+    - { role: freebsd-ansible, base_compile: false, release: "12.0-RELEASE"}
