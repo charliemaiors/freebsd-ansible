@@ -4,7 +4,7 @@
     chdir: /usr/src
     target: buildworld
     params:
-      "{{ item.key }}: {{ item.value }} | to_nice_json"
+      "{{ item.key }}={{ item.value }}"
   with_items:
     - "{{ build_common }}"
   when: (base_compile and src_updated) or (base_compile and src_installed)
