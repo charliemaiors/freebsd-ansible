@@ -20,7 +20,7 @@
   when: update is defined
 - name: include tasks for release upgrade
   include_tasks: upgrade.yml
-  when: release is defined
+  when: (version is defined) and (branch is defined)
 - name: include compilation tasks
   include_tasks: compile.yml
   when: (src_installed or "src" in components) and base_compile

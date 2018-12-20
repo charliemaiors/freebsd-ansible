@@ -1,6 +1,6 @@
 ---
 - name: Fetch any new FreeBSD updates
-  shell: freebsd-update --not-running-from-cron fetch
+  command: freebsd-update --not-running-from-cron fetch
   register: result_update
   changed_when: "'No updates needed' not in result_update.stdout"
 - name: set src updated
@@ -20,22 +20,22 @@
     kernel_opts: false
   when: "'/boot/kernel' not in result_update.stdout"
 - name: Install FreeBSD updates
-  shell: freebsd-update --not-running-from-cron install
+  command: freebsd-update --not-running-from-cron install
   when: result_update.changed
   register: result_update_install
 - name: Upgrade FreeBSD packages
   shell: pkg upgrade -y
 - name: Retrieve all jails
-  shell: jls -v name path
+  command: jls -v name path
   register: jail_names
   when: update == "full"
 - name: Upgrade FreeBSD packages for jails
-  shell: pkg -j {{ item.split(" ")[0] }} upgrade -y
+  command: pkg -j {{ item.split(" ")[0] }} upgrade -y
   with_items:
     - "{{ jail_names.stdout_lines }}"
   when: update == "full"
 - name: Upgrade userland for each jail
-  shell: freebsd-update -b {{ item.split(" ")[1] }} --not-running-from-cron fetch install
+  command: freebsd-update -b {{ item.split(" ")[1] }} --not-running-from-cron fetch install
   with_items:
     - "{{ jail_names.stdout_lines }}"
   when: update == "full"

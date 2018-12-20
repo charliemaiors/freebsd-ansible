@@ -4,7 +4,7 @@
     chdir: /usr/src
     target: buildworld
     params:
-      "{{ item.key }}={{ item.value }}"
+      "{{ item.key }}={{ item.value }}"   # I guess that python allows me to do it
   with_items:
     - "{{ build_common }}"
   when: (base_compile and src_updated) or (base_compile and src_installed)

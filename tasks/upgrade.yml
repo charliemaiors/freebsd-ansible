@@ -1,16 +1,22 @@
 ---
+- name: Check if current release is older than requested
+  fail:
+    msg: 'The requested version is older than the present'
+  when: "{{ ansible_version }} > {{ version }}"
+- name: create the release fact
+  set_fact:
+    release: "{{ version }}-{{ branch }}"
 - name: Upgrade freebsd release
-  shell: yes | freebsd-update --not-running-from-cron upgrade -r {{ release }}
+  command: yes | freebsd-update --not-running-from-cron upgrade -r {{ release }}
   register: update_status
-  when: release is defined
   ignore_errors: true
 - name: Install updates
-  shell: freebsd-update --not-running-from-cron install
+  command: freebsd-update --not-running-from-cron install
   when: ('Cannot upgrade from' not in update_status.stdout) or ('No mirrors remaining, giving up' in update_status.stdout)
 - name: Reboot machine and wait
   reboot:
     reboot_timeout: "{{ upgrade_reboot_timeout }}"
   when: ('Cannot upgrade from' not in update_status.stdout) or ('No mirrors remaining, giving up' in update_status.stdout)
 - name: Finish updates
-  shell: freebsd-update --not-running-from-cron install
+  command: freebsd-update --not-running-from-cron install
   when: ('Cannot upgrade from' not in update_status.stdout) or ('No mirrors remaining, giving up' in update_status.stdout)

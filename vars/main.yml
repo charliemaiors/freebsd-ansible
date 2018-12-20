@@ -17,7 +17,8 @@ cloud_vm_types:
 components:
   - src
   - ports
-# release: ""
+# version: ""
+# branch: ""
 # openstack_upload_vars: openstack upload envinroment variables
 #  - { key: "OS_USERNAME", value: "pippo" }
 #  - { key: "OS_PASSWORD", value: "pippo" }
