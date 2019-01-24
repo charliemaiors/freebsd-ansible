@@ -8,5 +8,5 @@
   command: portsnap fetch extract
   when: foundFiles.matched > 0
 - name: update ports tree
-  command: portsnap update
+  command: portsnap fetch update
   when: foundFiles.matched > 0
