@@ -94,7 +94,7 @@
         jid: "{{ item.ansible_job_id }}"
       register: os_jobs
       until: os_jobs.finished
-      retries: 300
+      retries: 500
       with_items: "{{ server.results }}"
 
     # Mandatory configuration for Molecule to function.
