@@ -127,5 +127,5 @@
         port: "{{ ssh_port }}"
         host: "{{ item.address }}"
         search_regex: SSH
-        delay: 10
+        delay: 100
       with_items: "{{ lookup('file', molecule_instance_config) | molecule_from_yaml }}"
