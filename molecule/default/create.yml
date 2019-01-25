@@ -84,6 +84,8 @@
         nics:
           - net-id: "{{ openstack_networks[0]['id'] }}"
         delete_fip: true
+        scheduler_hints:
+          availability-zone: "nova:{{ ansible_env.PREFERED_NODE }}"
       register: server
       with_items: "{{ molecule_yml.platforms }}"
       async: 7200
